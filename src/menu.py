@@ -1,7 +1,9 @@
 import os
 from lstCircular import *
+from archivo import *
 def MenuPrincipal():
     print("Bienvenido")
+    arch=Archivo()
 
     try:
 
@@ -27,12 +29,12 @@ def MenuPrincipal():
                 borrar()
                 print("         Ingresar nombre del archivo: \n")
                 nombre=input("          ")
+                arch.abrir(nombre)
                 b=input("       \nPresione una tecla para continuar...")
             else:
                 if a==2:
                     borrar()
                     print("             Procesar Archivos")
-
                     b=input("       \nPresione una tecla para continuar...")
                 else:
                     if(a==3):
