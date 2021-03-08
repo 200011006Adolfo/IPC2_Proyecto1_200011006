@@ -13,6 +13,8 @@ class Archivo:
         self.nombre=""
         self.lista=Lista()
         self.listaDeErrores=Lista()
+        self.listaMatrices=Lista()
+        self.listaFrecuencia=Lista()
 
 
     def abrir(self,rutaArchivo):
@@ -82,13 +84,13 @@ class Archivo:
                             y=subElement.attrib.get('y')
                             v=subElement.text
 
-                            if x==None or x.isdigit()==False :
+                            if x==None or x.isdigit()==False or x > n:
                                 errorInt=True
                                 #print("error 201")
                                 er.agregar(201,"Error en atributo x en Dato matriz ")
                                 lstErrores.agregar(er.getError())
 
-                            if y==None or y.isdigit()==False:
+                            if y==None or y.isdigit()==False or y > m:
                                 errorInt=True
                                 #print("error 202")
                                 er.agregar(202,"Error en atributo y en Dato matriz ")
@@ -169,29 +171,76 @@ class Archivo:
             print(e)
 
 
+    def procesar(self):
+        os.system("cls")
+        print("Procesando Archivo")
 
-#ar=Archivo()
-#ar.abrir("entradaPrueba.xml")
-#ar.procesar()
+        if self.lista.tamano==0:
+            print("Primero debe cargar archivo ")
+        else:
+            matAux=Matriz()
+            listaAux=Lista()
+            matAux=Matriz()
+            lstDato=Lista()
+
+            print("======")
+
+            for nMat in range(1,self.lista.tamano+1):
+                print(nMat)
+                matAux=self.lista.getDato(nMat)
+                i=0
+                for datMatriz in matAux:
+                    if i==0:
+                        nombre =datMatriz
+                        print(nombre)
+                    if i==1:
+                        n =datMatriz
+                        #print(n)
+                    if i==2:
+                        m =datMatriz
+                        #print(m)
+                    if i==3:
+                        lstDatoX=Lista()
+                        lstDatoY=Lista()
+                        lstPosicion=Lista()
+                        lstDato = datMatriz
+                        #print(lstDato)
+
+                    if i==4:
+                        estado=datMatriz
+                        #print(estado)
+                    i+=1
+                """Crear la matriz """
+
+                if estado==False:
+                    print(nombre)
+                    matFrecuencia=Matriz()
+                    mF=matFrecuencia.crearMatrizFrecuencia(lstDato,int(n),int(m))
+
+                    #   print("Creando Matriz Binaria")
+
+                    matBinaria=Matriz()
+                    matBinaria.crearDato(int(n),int(m))
+                    mB=matBinaria.crearMatrizBinaria(lstDato,int(n),int(m))
+                    #   print("Creando Matriz Reducida")
+                    matRed=Matriz()
+                    mBin=mB
+                    #matBinaria.getDatosMatrix()
+                    mFre=mF
+                    #matFrecuencia.getDatosMatrix()
+                    mR=matRed.crearMatrizReducida(mFre,mBin,n,m)
+
+                    #listaMatrices.agregar("mR")
+                    mtRed=Matriz()
+                    mtRed.crear(nombre,n,m,mR,True)
+                    self.listaMatrices.agregar(mtRed.getMatriz())
+                    print("matriz Reducida")
+                    print(mR)
+                    print("════════")
 
 
+                else:
+                    print("")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#os.system("cls")
-#arch=Archivo()
-#arch.abrir2("entrada1.xml")
-#arch.procesar1()
+    def crearSalida(self,rutaArchivo):
+        print("Crear Archivo de Salida")

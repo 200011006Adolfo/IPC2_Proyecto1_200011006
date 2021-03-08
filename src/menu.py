@@ -35,14 +35,16 @@ def MenuPrincipal():
                 if a==2:
                     borrar()
                     print("             Procesar Archivos")
+                    arch.procesar()
                     b=input("       \nPresione una tecla para continuar...")
                 else:
                     if(a==3):
                         borrar()
                         print("     Escribir la ruta para el archivo de salida:")
                         print("     Ejemplo: C:/Escritorio/salida.xml")
-                        b=input("       ")
-                        input("     \nPresione enter para continuar...")
+                        ruta=input("       ")
+                        arch.crearSalida(ruta)
+                        input("     Presione enter para continuar...")
                     else:
                         if(a==4):
                             borrar()
@@ -62,13 +64,13 @@ def MenuPrincipal():
                             if(a==5):
                                 borrar()
                                 print("     Generando Grafica De La Matriz")
+                                arch.graficar()
                                 b=input("   Presione enter para continuar...")
                             else:
                                 if(a==6):
                                     borrar()
                                     print("\n     Esta seguro de salir S/N")
                                     res=input("      ")
-
                                     if(res=="s" or res=="S"):
                                         break
                                     else:
