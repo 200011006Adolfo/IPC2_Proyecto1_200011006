@@ -249,7 +249,73 @@ class Archivo:
                     print("")
 
     def crearSalida(self,rutaArchivo):
-        print("Crear Archivo de Salida")
+
+        matAux=Matriz()
+        listaAux=Lista()
+        matAux=Matriz()
+        lstDato=Lista()
+
+        print("Crear Salida")
+
+        print(self.listaMatrices.tamano)
+        matR=self.listaMatrices.getDato(2)
+        #print(matR)
+
+        eMatrices=et.Element('matrices')
+        #print(eMatrices.tag)
+
+        for nMat in range(1,self.listaMatrices.tamano+1):
+            #print(nMat)
+            matAux=self.listaMatrices.getDato(nMat)
+            i=0
+            for datMatriz in matAux:
+                if i==0:
+                    nombre =datMatriz
+                    #print(nombre)
+                if i==1:
+                    n =datMatriz
+                    #print(n)
+                if i==2:
+                    m =datMatriz
+                    #print(m)
+                if i==3:
+                    matRedi = datMatriz
+                    #print(matRedi)
+                if i==4:
+                    estado=datMatriz
+                    #print(estado)
+                i+=1
+
+            eMatriz=et.SubElement(eMatrices,'matriz',nombre = nombre ,n= str(len(matRedi)),m=m,g=str(len(matRedi)))
+            #print(eMatriz.tag)
+
+            for f in range(0,len(matRedi)):
+                for c in range(0,int(m)):
+                    #print(f," ║ ", c)
+                    #print(matRedi[f][c])
+                    eDato=et.SubElement(eMatriz,"dato",x=str(f),y=str(c))
+                    eDato.text=str(matRedi[f][c])
+
+
+            for f in range(0,len(matRedi)):
+                eFrecuencia=et.SubElement(eMatriz,"Frecuencia", g =str(f+1))
+                eDato.text=str(f)
+                #print(lstFr.getDato(f))
+
+                #eDato.text=str(lstFr.getDato(f))
+
+
+
+        
+            dtsXml=et.ElementTree(eMatrices)
+            dtsXml.write("c:/users/adolfo/desktop/salida.xml")
+            print("Se creo el archivo de salida con exito...")
+            input("")
+
+
+
+
+
 
     def graficar(self):
         matAux=Matriz()

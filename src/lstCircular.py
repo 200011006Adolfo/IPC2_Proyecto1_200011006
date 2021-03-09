@@ -166,3 +166,5 @@ class Lista:
                 actual=actual.siguiente
         else:
             print("Lista Vacia")
+
+        
