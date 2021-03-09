@@ -306,11 +306,7 @@ class Archivo:
 
 
 
-            #eFrecuencia=et.SubElement(eMatriz,"Frecuencia", g =" 4")
-            #eFrecuencia.text="50"
-            #print(eFrecuencia.tag)
-                    #eFrecuencia.set('g',"Vg")
-                    #eFrecuencia.text( "Vf")
+        
             dtsXml=et.ElementTree(eMatrices)
             dtsXml.write("c:/users/adolfo/desktop/salida.xml")
             print("Se creo el archivo de salida con exito...")
