@@ -57,7 +57,7 @@ class Matriz:
         return self.matrix
 
     def crearMatrizFrecuencia(self,matriz,n,m):
-        print("Creando Matriz de Frecuencia")
+        #print("Creando Matriz de Frecuencia")
         matFrecuencia=Matriz()
         matFrecuencia.crearDato(int(n),int(m))
 
@@ -80,8 +80,8 @@ class Matriz:
                         if j==3:
                             v=lstPosicion
                             matFrecuencia.agregarDato(x,y,v)
-        print(matFrecuencia.getDatosMatrix())
-        print("════════")
+        #print(matFrecuencia.getDatosMatrix())
+        #print("════════")
         return matFrecuencia.getDatosMatrix()
 
     def crearMatrizBinaria(self,matriz,n,m):
@@ -111,7 +111,7 @@ class Matriz:
 
     def crearMatrizReducida(self,matrizFre,matrizBin,n,m):
         matBin=matrizBin
-        matFre=matrizFre
+        matFreAux=matrizFre
         matAux=matrizFre
         inc=0
         lstMatch=Lista()
@@ -135,12 +135,12 @@ class Matriz:
                     #print("coincidencia en ", fc , f)
 
                     for c in range(0,int(m)):
-                        matAux[fc][c]=matFre[fc][c]+matFre[f][c]
+                        matAux[fc][c]=matFreAux[fc][c]+matFreAux[f][c]
                     matBin.pop(f)
                     matAux.pop(f)
                     #matFre.pop(f)
-                    matFre=matAux
-                    self.crearMatrizReducida(matFre,matBin,len(matBin),m)
+                    matFreAux=matAux
+                    self.crearMatrizReducida(matFreAux,matBin,len(matBin),m)
                     break
                 else:
                     if(esIgual==False and unoDiferente==False):
@@ -151,4 +151,4 @@ class Matriz:
         #print("Matriz Reducida")
         #print(matFre)
         #print("════════")
-        return matFre
+        return matFreAux

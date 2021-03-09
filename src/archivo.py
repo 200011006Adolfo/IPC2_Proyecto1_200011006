@@ -3,6 +3,7 @@ import xml.etree.ElementTree as et
 from lstCircular import *
 from matriz import *
 from error import *
+from graphviz import Digraph as g
 import os
 import re
 
@@ -215,7 +216,13 @@ class Archivo:
                 if estado==False:
                     print(nombre)
                     matFrecuencia=Matriz()
+                    matrizAux=Matriz()
+                    print("Creando Matriz de Frecuencia")
                     mF=matFrecuencia.crearMatrizFrecuencia(lstDato,int(n),int(m))
+                    print(mF)
+                    print("════════════════════")
+                    matrizAux.crear(nombre,n,m,lstDato,True)
+                    self.listaFrecuencia.agregar(matrizAux.getMatriz())
 
                     #   print("Creando Matriz Binaria")
 
@@ -238,9 +245,92 @@ class Archivo:
                     print(mR)
                     print("════════")
 
-
                 else:
                     print("")
 
     def crearSalida(self,rutaArchivo):
         print("Crear Archivo de Salida")
+
+    def graficar(self):
+        matAux=Matriz()
+
+        if self.lista.tamano==0:
+            print("Primero debe cargar archivo ")
+        else:
+            matAux=Matriz()
+            listaAux=Lista()
+            matAux=Matriz()
+            lstDato=Lista()
+
+            print("======")
+
+            print("Lista da Matrices Procesadas")
+            print("══════════════════════════════")
+            print("       No    Nombre")
+            for nMat in range(1,self.listaFrecuencia.tamano+1):
+                #print(nMat)
+                matAux=self.listaFrecuencia.getDato(nMat)
+                i=0
+                for datMatriz in matAux:
+                    if i==0:
+                        nombre =datMatriz
+                        print("       "+str(nMat) +" " +nombre)
+                    i+=1
+
+            op=input(" \n Elija la matriz que desea graficar:  ")
+
+            for nMat in range(1,self.listaFrecuencia.tamano+1):
+                #print(nMat)
+                if int(op)==nMat:
+                    matAux=self.listaFrecuencia.getDato(nMat)
+                    i=0
+                    for datMatriz in matAux:
+                        if i==0:
+                            nombre =datMatriz
+                            print("\n")
+                            print("   Usted eligio la matriz: ",nombre)
+                        if i==1:
+                            n =datMatriz
+                        if i==2:
+                            m =datMatriz
+                        if i==3:
+                            matriz =datMatriz
+                        if i==4:
+                            estado =datMatriz
+
+                        i+=1
+
+                    print("     Graficando...")
+
+
+                    dot=g(comment="Matrices")
+                    dot.node('A','Matrices')
+
+                    #Datos de la matriz
+                    dot.node('nombre',nombre)
+                    dot.node('n','n = '+str(n))
+                    dot.node('m','m = '+str(m))
+
+                    dot.edge('A','nombre')
+                    dot.edge('nombre','n')
+                    dot.edge('nombre','m')
+
+                    matFrecuencia=Matriz()
+                    matrizF=matFrecuencia.crearMatrizFrecuencia(matriz,int(n),int(m))
+                    print("    ",matrizF)
+
+                    for i in range(0,int(n)):
+                        for j in range(0,int(m)):
+                            dot.node(str(i)+" " + str(j) ,str(matrizF[i][j]))
+
+                    for i in range(0,1):
+                        for j in range(0,int(m)):
+                            dot.edge('nombre',str(i)+" "+str(j))
+
+                    for i in range(0,int(n)-1):
+                        for j in range(0,int(m)):
+                            if j<int(m):
+                                dot.edge(str(i)+" " + str(j),str(i+1)+" " + str(j))
+
+                    #print(dot.source)
+                    dot.render("Reportes/"+nombre,format="png",view=True)
